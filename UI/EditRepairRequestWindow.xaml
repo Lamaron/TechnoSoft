@@ -126,13 +126,8 @@
                         TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
                         ToolTip="Комментарии и заметки инженера"/>
 
-                <!-- Заказанные запчасти -->
-                <TextBlock Grid.Row="10" Grid.Column="0" Text="Заказанные запчасти:" 
-                          Margin="0,5" VerticalAlignment="Center" FontWeight="SemiBold"/>
-                <TextBox Grid.Row="10" Grid.Column="1" Name="txtOrderedSpareParts" 
-                        Margin="10,5" Height="60" Padding="5" AcceptsReturn="True"
-                        TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
-                        ToolTip="Список заказанных запчастей"/>
+               
+                
             </Grid>
         </ScrollViewer>
 
