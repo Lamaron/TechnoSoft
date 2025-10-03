@@ -1,35 +1,35 @@
-﻿namespace Domain
+﻿using System;
+
+namespace Domain
 {
     public class Request
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
+        public string Number { get; set; }
         public DateTime Date { get; set; }
-        public string Tipe { get; set; }
-        public string Model { get; set; }
-        public string Description { get; set; }
+        public string EquipmentType { get; set; }
+        public string EquipmentModel { get; set; }
+        public string ProblemDescription { get; set; }
         public string Status { get; set; }
         public string ClientFullName { get; set; }
         public string ClientPhone { get; set; }
         public string Engineer { get; set; }
         public string Comments { get; set; }
 
-        // Конструктор по умолчанию (обязателен для WPF)
-        public Request()
-        {
-        }
+        public Request() { }
 
-        // Конструктор с параметрами
-        public Request(string id, DateTime date, string tipe, string model, string description, string status, string clientfullname,
-            string clientphone, string engineer, string comments)
+        public Request(string number, DateTime date, string equipmentType, string equipmentModel,
+                      string problemDescription, string status, string clientFullName,
+                      string clientPhone, string engineer, string comments)
         {
-            Id = id;
+            Number = number;
             Date = date;
-            Tipe = tipe;
-            Model = model;
-            Description = description;
+            EquipmentType = equipmentType;
+            EquipmentModel = equipmentModel;
+            ProblemDescription = problemDescription;
             Status = status;
-            ClientFullName = clientfullname;
-            ClientPhone = clientphone;
+            ClientFullName = clientFullName;
+            ClientPhone = clientPhone;
             Engineer = engineer;
             Comments = comments;
         }

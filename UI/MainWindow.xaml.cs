@@ -1,19 +1,8 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using Data.InMemory;
 
 namespace UI
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -23,21 +12,24 @@ namespace UI
 
         private void BtnListRequests_Click(object sender, RoutedEventArgs e)
         {
-            // Пока просто показываем сообщение
-            MessageBox.Show("Функционал списка заявок в разработке", "Информация",
-                          MessageBoxButton.OK, MessageBoxImage.Information);
+            // Теперь используем конструктор без параметров
+            var listWindow = new RepairRequestListWindow();
+            listWindow.Owner = this;
+            listWindow.ShowDialog();
         }
 
         private void BtnAddRequest_Click(object sender, RoutedEventArgs e)
         {
-            var editWindow = new Window1();
-            editWindow.Show();
+            var editWindow = new Window1(new RequestRepository());
+            editWindow.Owner = this;
+            editWindow.ShowDialog();
         }
 
         private void BtnStatistics_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Функционал статистики в разработке", "Информация",
-                          MessageBoxButton.OK, MessageBoxImage.Information);
+            var statsWindow = new StatisticsWindow(new RequestRepository());
+            statsWindow.Owner = this;
+            statsWindow.ShowDialog();
         }
     }
 }
