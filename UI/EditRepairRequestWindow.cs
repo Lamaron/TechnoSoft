@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using Data.Interfaces;
@@ -10,25 +9,17 @@ namespace UI
 {
     public partial class Window1 : Window
     {
-        private IRequestRepository _repository;
+        private readonly IRequestRepository _repository;
         private Request _currentRequest;
 
         public bool? Result { get; private set; }
         public Request SavedRequest { get; private set; }
         public bool IsReadOnly { get; set; }
 
-        // Конструктор БЕЗ параметров
-        public Window1()
+        public Window1(IRequestRepository repository, Request request = null)
         {
             InitializeComponent();
-            _repository = new RequestRepository(); // Создаем репозиторий здесь
-            InitializeWindow();
-        }
-
-        // Конструктор с параметром
-        public Window1(IRequestRepository repository, Request request = null) : this()
-        {
-            _repository = repository ?? new RequestRepository();
+            _repository = repository;
             _currentRequest = request;
             InitializeWindow();
         }
@@ -37,7 +28,7 @@ namespace UI
         {
             if (_currentRequest != null)
             {
-                Title = IsReadOnly ? "Просмотр заявки" : "Редактирование заявки";
+                Title = "Редактирование заявки";
                 FillFormData();
             }
             else
@@ -45,15 +36,11 @@ namespace UI
                 Title = "Добавление новой заявки";
                 dpDateAdded.SelectedDate = DateTime.Now;
                 cmbStatus.SelectedIndex = 0;
-
-                // Автогенерация номера заявки
-                txtNumber.Text = _repository.GenerateRequestNumber();
             }
 
             SetReadOnlyMode(IsReadOnly);
         }
 
-        // Остальные методы без изменений...
         private void SetReadOnlyMode(bool readOnly)
         {
             txtNumber.IsReadOnly = readOnly;
@@ -69,8 +56,13 @@ namespace UI
 
             if (readOnly)
             {
-                BtnSave.Visibility = Visibility.Collapsed;
-                BtnCancel.Content = "Закрыть";
+                var saveButton = FindName("BtnSave") as Button;
+                if (saveButton != null)
+                    saveButton.Visibility = Visibility.Collapsed;
+
+                var cancelButton = FindName("BtnCancel") as Button;
+                if (cancelButton != null)
+                    cancelButton.Content = "Закрыть";
             }
         }
 
@@ -115,25 +107,12 @@ namespace UI
                 {
                     // Редактирование существующей заявки
                     request.Id = _currentRequest.Id;
-                    if (!_repository.Update(request))
-                    {
-                        MessageBox.Show("Не удалось обновить заявку. Возможно, номер заявки уже существует.", "Ошибка",
-                                      MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
+                    _repository.Update(request);
                 }
                 else
                 {
                     // Создание новой заявки
-                    try
-                    {
-                        _repository.Add(request);
-                    }
-                    catch (ArgumentException ex)
-                    {
-                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
+                    _repository.Add(request);
                 }
 
                 SavedRequest = request;
@@ -153,120 +132,41 @@ namespace UI
 
         private bool ValidateForm()
         {
-            // Проверка номера заявки
             if (string.IsNullOrWhiteSpace(txtNumber.Text))
             {
-                ShowValidationError("Введите номер заявки", txtNumber);
+                MessageBox.Show("Введите номер заявки", "Ошибка",
+                              MessageBoxButton.OK, MessageBoxImage.Warning);
+                txtNumber.Focus();
                 return false;
             }
 
-            // Проверка даты
-            if (dpDateAdded.SelectedDate == null)
-            {
-                ShowValidationError("Выберите дату добавления", dpDateAdded);
-                return false;
-            }
-
-            // Проверка типа оборудования
-            if (string.IsNullOrWhiteSpace(cmbEquipmentType.Text))
-            {
-                ShowValidationError("Выберите тип оборудования", cmbEquipmentType);
-                return false;
-            }
-
-            // Проверка модели оборудования
-            if (string.IsNullOrWhiteSpace(txtEquipmentModel.Text))
-            {
-                ShowValidationError("Введите модель оборудования", txtEquipmentModel);
-                return false;
-            }
-
-            // Проверка описания проблемы
-            if (string.IsNullOrWhiteSpace(txtProblemDescription.Text))
-            {
-                ShowValidationError("Введите описание проблемы", txtProblemDescription);
-                return false;
-            }
-
-            // Проверка ФИО клиента
             if (string.IsNullOrWhiteSpace(txtClientFullName.Text))
             {
-                ShowValidationError("Введите ФИО клиента", txtClientFullName);
+                MessageBox.Show("Введите ФИО клиента", "Ошибка",
+                              MessageBoxButton.OK, MessageBoxImage.Warning);
+                txtClientFullName.Focus();
                 return false;
             }
 
-            // Проверка телефона
             if (string.IsNullOrWhiteSpace(txtClientPhone.Text))
             {
-                ShowValidationError("Введите номер телефона", txtClientPhone);
-                return false;
-            }
-
-            if (!IsValidPhone(txtClientPhone.Text))
-            {
-                ShowValidationError("Введите корректный номер телефона", txtClientPhone);
-                return false;
-            }
-
-            // Проверка статуса
-            if (string.IsNullOrWhiteSpace(cmbStatus.Text))
-            {
-                ShowValidationError("Выберите статус заявки", cmbStatus);
+                MessageBox.Show("Введите номер телефона", "Ошибка",
+                              MessageBoxButton.OK, MessageBoxImage.Warning);
+                txtClientPhone.Focus();
                 return false;
             }
 
             return true;
         }
 
-        private void ShowValidationError(string message, Control control)
-        {
-            MessageBox.Show(message, "Ошибка валидации",
-                          MessageBoxButton.OK, MessageBoxImage.Warning);
-            control.Focus();
-        }
-
-        private bool IsValidPhone(string phone)
-        {
-            // Упрощенная проверка телефона - минимум 10 цифр
-            var digitsOnly = Regex.Replace(phone, @"\D", "");
-            return digitsOnly.Length >= 10;
-        }
-
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            if (!IsReadOnly && HasChanges())
+            if (MessageBox.Show("Отменить изменения и закрыть форму?", "Подтверждение",
+                              MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                var result = MessageBox.Show("Есть несохраненные изменения. Закрыть форму?", "Подтверждение",
-                                          MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result != MessageBoxResult.Yes)
-                    return;
+                Result = false;
+                this.Close();
             }
-
-            Result = false;
-            this.Close();
-        }
-
-        private bool HasChanges()
-        {
-            if (_currentRequest == null)
-            {
-                // Для новой заявки проверяем, есть ли введенные данные
-                return !string.IsNullOrWhiteSpace(txtNumber.Text) ||
-                       !string.IsNullOrWhiteSpace(txtClientFullName.Text) ||
-                       !string.IsNullOrWhiteSpace(txtClientPhone.Text);
-            }
-
-            // Для существующей заявки проверяем изменения
-            return txtNumber.Text != _currentRequest.Number ||
-                   dpDateAdded.SelectedDate != _currentRequest.Date ||
-                   cmbEquipmentType.Text != _currentRequest.EquipmentType ||
-                   txtEquipmentModel.Text != _currentRequest.EquipmentModel ||
-                   txtProblemDescription.Text != _currentRequest.ProblemDescription ||
-                   txtClientFullName.Text != _currentRequest.ClientFullName ||
-                   txtClientPhone.Text != _currentRequest.ClientPhone ||
-                   cmbStatus.Text != _currentRequest.Status ||
-                   txtResponsibleEngineer.Text != _currentRequest.Engineer ||
-                   txtComments.Text != _currentRequest.Comments;
         }
     }
 }

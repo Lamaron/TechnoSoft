@@ -15,7 +15,6 @@
 
         <!-- Заголовок -->
         <StackPanel Grid.Row="0" Margin="0,0,0,30">
-            
             <TextBlock Text="Главная страница" 
                        FontSize="28" FontWeight="Bold" 
                        HorizontalAlignment="Center"
@@ -50,6 +49,7 @@
                            Foreground="White" HorizontalAlignment="Center"
                            VerticalAlignment="Center" FontSize="14"/>
 
+               
             </Grid>
         </Border>
     </Grid>

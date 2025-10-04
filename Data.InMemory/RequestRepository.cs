@@ -8,60 +8,36 @@ namespace Data.InMemory
 {
     public class RequestRepository : IRequestRepository
     {
-        private readonly List<Request> _requests;
+        private readonly List<Request> _requests = new List<Request>();
         private int _nextId = 1;
 
         public RequestRepository()
         {
-            _requests = new List<Request>(); // Явная инициализация
+            // Тестовые данные
             InitializeSampleData();
         }
 
         private void InitializeSampleData()
         {
-            // Добавляем только если список пустой
-            if (_requests.Any()) return;
-
-            try
+            _requests.AddRange(new[]
             {
-                var sampleRequests = new[]
-                {
-                    new Request(
-                        "REQ-001",
-                        DateTime.Now.AddDays(-5),
-                        "Компьютер",
-                        "Dell Optiplex",
-                        "Не включается",
-                        "Новая заявка",
-                        "Иванов Иван",
-                        "+7(999)123-45-67",
-                        "Петров А.С.",
-                        "Требуется диагностика"
-                    ),
-                    new Request(
-                        "REQ-002",
-                        DateTime.Now.AddDays(-3),
-                        "Принтер",
-                        "HP LaserJet",
-                        "Зажевывает бумагу",
-                        "В процессе ремонта",
-                        "Петрова Мария",
-                        "+7(999)765-43-21",
-                        "Сидоров В.К.",
-                        "Заказаны ролики подачи"
-                    )
-                };
+                new Request("001", DateTime.Now.AddDays(-5), "Компьютер", "Dell Optiplex",
+                           "Не включается", "Новая заявка", "Иванов Иван", "+7(999)123-45-67",
+                           "Петров А.С.", "Требуется диагностика"),
 
-                foreach (var request in sampleRequests)
-                {
-                    request.Id = _nextId++;
-                    _requests.Add(request);
-                }
-            }
-            catch (Exception ex)
+                new Request("002", DateTime.Now.AddDays(-3), "Принтер", "HP LaserJet",
+                           "Зажевывает бумагу", "В процессе ремонта", "Петрова Мария", "+7(999)765-43-21",
+                           "Сидоров В.К.", "Заказаны ролики подачи"),
+
+                new Request("003", DateTime.Now.AddDays(-1), "Ноутбук", "Lenovo ThinkPad",
+                           "Не работает Wi-Fi", "Ожидание запчастей", "Сидоров Алексей", "+7(999)555-44-33",
+                           "Петров А.С.", "Ожидается сетевая карта")
+            });
+
+            // Устанавливаем ID для тестовых данных
+            foreach (var request in _requests)
             {
-                // Логируем ошибку, но не падаем
-                System.Diagnostics.Debug.WriteLine($"Ошибка инициализации: {ex.Message}");
+                request.Id = _nextId++;
             }
         }
 
@@ -77,57 +53,45 @@ namespace Data.InMemory
 
         public Request GetById(int id)
         {
-            return _requests?.FirstOrDefault(r => r.Id == id);
+            return _requests.FirstOrDefault(r => r.Id == id);
         }
 
         public List<Request> GetAll()
         {
-            return _requests?.OrderByDescending(r => r.Date).ToList() ?? new List<Request>();
+            return _requests.OrderByDescending(r => r.Date).ToList();
         }
 
         public bool Update(Request request)
         {
-            if (request == null || _requests == null) return false;
+            if (request == null)
+                return false;
 
-            var existing = GetById(request.Id);
-            if (existing == null) return false;
+            var existingRequest = GetById(request.Id);
+            if (existingRequest == null)
+                return false;
 
-            existing.Number = request.Number;
-            existing.Date = request.Date;
-            existing.EquipmentType = request.EquipmentType;
-            existing.EquipmentModel = request.EquipmentModel;
-            existing.ProblemDescription = request.ProblemDescription;
-            existing.Status = request.Status;
-            existing.ClientFullName = request.ClientFullName;
-            existing.ClientPhone = request.ClientPhone;
-            existing.Engineer = request.Engineer;
-            existing.Comments = request.Comments;
+            // Обновляем все поля кроме Id
+            existingRequest.Number = request.Number;
+            existingRequest.Date = request.Date;
+            existingRequest.EquipmentType = request.EquipmentType;
+            existingRequest.EquipmentModel = request.EquipmentModel;
+            existingRequest.ProblemDescription = request.ProblemDescription;
+            existingRequest.Status = request.Status;
+            existingRequest.ClientFullName = request.ClientFullName;
+            existingRequest.ClientPhone = request.ClientPhone;
+            existingRequest.Engineer = request.Engineer;
+            existingRequest.Comments = request.Comments;
 
             return true;
         }
 
         public bool Delete(int id)
         {
-            if (_requests == null) return false;
-
             var request = GetById(id);
-            return request != null && _requests.Remove(request);
-        }
+            if (request == null)
+                return false;
 
-        public bool IsNumberExists(string number, int? excludeId = null)
-        {
-            if (_requests == null) return false;
-
-            return excludeId.HasValue
-                ? _requests.Any(r => r.Number == number && r.Id != excludeId.Value)
-                : _requests.Any(r => r.Number == number);
-        }
-
-        public string GenerateRequestNumber()
-        {
-            var datePart = DateTime.Now.ToString("yyyyMMdd");
-            var randomPart = new Random().Next(1000, 9999);
-            return $"REQ-{datePart}-{randomPart}";
+            return _requests.Remove(request);
         }
     }
 }

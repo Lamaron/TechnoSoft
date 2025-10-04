@@ -17,7 +17,7 @@ namespace UI
         public RepairRequestListWindow()
         {
             InitializeComponent();
-            _repository = new RequestRepository(); // Создаем репозиторий здесь
+            _repository = new RequestRepository();
             Loaded += RepairRequestListWindow_Loaded;
             UpdateActionButtons();
         }
@@ -25,7 +25,7 @@ namespace UI
         // Конструктор с параметром (для кода)
         public RepairRequestListWindow(IRequestRepository repository) : this()
         {
-            _repository = repository; // Используем переданный репозиторий
+            _repository = repository;
         }
 
         private void RepairRequestListWindow_Loaded(object sender, RoutedEventArgs e)

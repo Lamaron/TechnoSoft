@@ -10,7 +10,5 @@ namespace Data.Interfaces
         List<Request> GetAll();
         bool Update(Request request);
         bool Delete(int id);
-        bool IsNumberExists(string number, int? excludeId = null);
-        string GenerateRequestNumber();
     }
 }
