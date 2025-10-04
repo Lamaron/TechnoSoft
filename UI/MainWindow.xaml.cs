@@ -1,36 +1,33 @@
 ﻿using System.Windows;
-using Data.Interfaces;
-using Data.InMemory;
+using Data; // Убедитесь, что эта директива using есть
 
 namespace UI
 {
     public partial class MainWindow : Window
     {
-        private readonly IRequestRepository _repository;
-
         public MainWindow()
         {
             InitializeComponent();
-            _repository = new RequestRepository(); // Создаем репозиторий
         }
 
         private void BtnListRequests_Click(object sender, RoutedEventArgs e)
         {
-            var listWindow = new RepairRequestListWindow(_repository);
+            // Теперь используем конструктор с параметром
+            var listWindow = new RepairRequestListWindow(RepositoryContainer.RequestRepository);
             listWindow.Owner = this;
             listWindow.ShowDialog();
         }
 
         private void BtnAddRequest_Click(object sender, RoutedEventArgs e)
         {
-            var editWindow = new Window1(_repository);
+            var editWindow = new Window1(RepositoryContainer.RequestRepository);
             editWindow.Owner = this;
             editWindow.ShowDialog();
         }
 
         private void BtnStatistics_Click(object sender, RoutedEventArgs e)
         {
-            var statsWindow = new StatisticsWindow(_repository);
+            var statsWindow = new StatisticsWindow(RepositoryContainer.RequestRepository);
             statsWindow.Owner = this;
             statsWindow.ShowDialog();
         }

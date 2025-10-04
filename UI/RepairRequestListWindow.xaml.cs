@@ -22,10 +22,10 @@ namespace UI
             UpdateActionButtons();
         }
 
-        // Конструктор с параметром (для кода)
+        // Конструктор С параметром (для MainWindow)
         public RepairRequestListWindow(IRequestRepository repository) : this()
         {
-            _repository = repository;
+            _repository = repository; // Используем переданный репозиторий
         }
 
         private void RepairRequestListWindow_Loaded(object sender, RoutedEventArgs e)
@@ -37,12 +37,12 @@ namespace UI
         {
             try
             {
-                if (_repository == null)
-                {
-                    MessageBox.Show("Репозиторий не инициализирован", "Ошибка",
-                                  MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
+                //if (_repository == null)
+                //{
+                //    MessageBox.Show("Репозиторий не инициализирован", "Ошибка",
+                //                  MessageBoxButton.OK, MessageBoxImage.Error);
+                //    return;
+                //}
 
                 var allRequests = _repository.GetAll();
 
@@ -84,8 +84,8 @@ namespace UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}", "Ошибка",
-                              MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}", "Ошибка",
+                //              MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
