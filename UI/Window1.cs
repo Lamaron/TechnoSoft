@@ -115,7 +115,6 @@ namespace UI
 
                 if (_currentRequest != null)
                 {
-                    // Редактирование существующей заявки
                     request.Id = _currentRequest.Id;
                     if (!_repository.Update(request))
                     {
@@ -126,7 +125,6 @@ namespace UI
                 }
                 else
                 {
-                    // Создание новой заявки
                     try
                     {
                         _repository.Add(request);
@@ -153,52 +151,44 @@ namespace UI
             }
         }
 
-        // ДОБАВЛЯЕМ ПРОПУЩЕННЫЙ МЕТОД ValidateForm
         private bool ValidateForm()
         {
-            // Проверка номера заявки
             if (string.IsNullOrWhiteSpace(txtNumber.Text))
             {
                 ShowValidationError("Введите номер заявки", txtNumber);
                 return false;
             }
 
-            // Проверка даты
             if (dpDateAdded.SelectedDate == null)
             {
                 ShowValidationError("Выберите дату добавления", dpDateAdded);
                 return false;
             }
 
-            // Проверка типа оборудования
             if (string.IsNullOrWhiteSpace(cmbEquipmentType.Text))
             {
                 ShowValidationError("Выберите тип оборудования", cmbEquipmentType);
                 return false;
             }
 
-            // Проверка модели оборудования
             if (string.IsNullOrWhiteSpace(txtEquipmentModel.Text))
             {
                 ShowValidationError("Введите модель оборудования", txtEquipmentModel);
                 return false;
             }
 
-            // Проверка описания проблемы
             if (string.IsNullOrWhiteSpace(txtProblemDescription.Text))
             {
                 ShowValidationError("Введите описание проблемы", txtProblemDescription);
                 return false;
             }
 
-            // Проверка ФИО клиента
             if (string.IsNullOrWhiteSpace(txtClientFullName.Text))
             {
                 ShowValidationError("Введите ФИО клиента", txtClientFullName);
                 return false;
             }
 
-            // Проверка телефона
             if (string.IsNullOrWhiteSpace(txtClientPhone.Text))
             {
                 ShowValidationError("Введите номер телефона", txtClientPhone);
@@ -211,7 +201,6 @@ namespace UI
                 return false;
             }
 
-            // Проверка статуса
             if (string.IsNullOrWhiteSpace(cmbStatus.Text))
             {
                 ShowValidationError("Выберите статус заявки", cmbStatus);
@@ -230,7 +219,7 @@ namespace UI
 
         private bool IsValidPhone(string phone)
         {
-            // Упрощенная проверка телефона - минимум 10 цифр
+
             var digitsOnly = Regex.Replace(phone, @"\D", "");
             return digitsOnly.Length >= 10;
         }
@@ -253,13 +242,11 @@ namespace UI
         {
             if (_currentRequest == null)
             {
-                // Для новой заявки проверяем, есть ли введенные данные
                 return !string.IsNullOrWhiteSpace(txtNumber.Text) ||
                        !string.IsNullOrWhiteSpace(txtClientFullName.Text) ||
                        !string.IsNullOrWhiteSpace(txtClientPhone.Text);
             }
 
-            // Для существующей заявки проверяем изменения
             return txtNumber.Text != _currentRequest.Number ||
                    dpDateAdded.SelectedDate != _currentRequest.Date ||
                    cmbEquipmentType.Text != _currentRequest.EquipmentType ||
