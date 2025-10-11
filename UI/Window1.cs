@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Data.InMemory;
+using Data.Interfaces;
+using Domain;
+using System;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using Data.Interfaces;
-using Data.InMemory;
-using Domain;
+using UI.Helpers;
+using static Domain.Request;
 
 namespace UI
 {
@@ -23,7 +25,14 @@ namespace UI
             InitializeComponent();
             _repository = repository;
             _currentRequest = request;
+            InitializeStatusComboBox();
             InitializeWindow();
+        }
+
+        private void InitializeStatusComboBox()
+        {
+            cmbStatus.ItemsSource = StatusHelper.GetStatusItems();
+            cmbStatus.SelectedIndex = 0; 
         }
 
         private void InitializeWindow()
@@ -38,16 +47,10 @@ namespace UI
                 Title = "Добавление новой заявки";
                 dpDateAdded.SelectedDate = DateTime.Now;
                 cmbStatus.SelectedIndex = 0;
+                cmbStatus.SelectedValue = RequestStatus.New;
 
-                // Автогенерация номера заявки
-                if (_repository != null)
-                {
-                    txtNumber.Text = _repository.GenerateRequestNumber();
-                }
-                else
-                {
-                    txtNumber.Text = "REQ-" + DateTime.Now.ToString("yyyyMMdd") + "-" + new Random().Next(1000, 9999);
-                }
+                txtNumber.Text = _repository.GenerateRequestNumber();
+
             }
 
             SetReadOnlyMode(IsReadOnly);
@@ -84,7 +87,7 @@ namespace UI
             txtProblemDescription.Text = _currentRequest.ProblemDescription;
             txtClientFullName.Text = _currentRequest.ClientFullName;
             txtClientPhone.Text = _currentRequest.ClientPhone;
-            cmbStatus.Text = _currentRequest.Status;
+            cmbStatus.SelectedValue = _currentRequest.Status;
             txtResponsibleEngineer.Text = _currentRequest.Engineer;
             txtComments.Text = _currentRequest.Comments;
         }
@@ -105,7 +108,7 @@ namespace UI
                     ProblemDescription = txtProblemDescription.Text.Trim(),
                     ClientFullName = txtClientFullName.Text.Trim(),
                     ClientPhone = txtClientPhone.Text.Trim(),
-                    Status = cmbStatus.Text,
+                    Status = (RequestStatus)cmbStatus.SelectedValue,
                     Engineer = txtResponsibleEngineer.Text.Trim(),
                     Comments = txtComments.Text.Trim()
                 };
@@ -264,7 +267,7 @@ namespace UI
                    txtProblemDescription.Text != _currentRequest.ProblemDescription ||
                    txtClientFullName.Text != _currentRequest.ClientFullName ||
                    txtClientPhone.Text != _currentRequest.ClientPhone ||
-                   cmbStatus.Text != _currentRequest.Status ||
+                   (RequestStatus)cmbStatus.SelectedValue != _currentRequest.Status ||
                    txtResponsibleEngineer.Text != _currentRequest.Engineer ||
                    txtComments.Text != _currentRequest.Comments;
         }

@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using Data; // Убедитесь, что эта директива using есть
+using Data;
 
 namespace UI
 {
@@ -12,7 +12,6 @@ namespace UI
 
         private void BtnListRequests_Click(object sender, RoutedEventArgs e)
         {
-            // Теперь используем конструктор с параметром
             var listWindow = new RepairRequestListWindow(RepositoryContainer.RequestRepository);
             listWindow.Owner = this;
             listWindow.ShowDialog();

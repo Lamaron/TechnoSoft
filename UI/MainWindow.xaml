@@ -13,7 +13,6 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Заголовок -->
         <StackPanel Grid.Row="0" Margin="0,0,0,30">
             <TextBlock Text="Главная страница" 
                        FontSize="28" FontWeight="Bold" 
@@ -21,7 +20,6 @@
                        Foreground="#2c3e50"/>
         </StackPanel>
 
-        <!-- Панель кнопок -->
         <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Button Content="📋 Список заявок" Name="BtnListRequests"
                     Width="300" Height="55" Margin="0,12"
@@ -42,7 +40,7 @@
                     BorderThickness="0" Cursor="Hand" FontWeight="SemiBold"/>
         </StackPanel>
 
-        <!-- Нижняя панель -->
+ 
         <Border Grid.Row="2" Background="#34495e" Padding="15,10" CornerRadius="5">
             <Grid>
                 <TextBlock Text="Система управления заявками" 

@@ -8,18 +8,28 @@ namespace Domain
         public string Number { get; set; }
         public DateTime Date { get; set; }
         public string EquipmentType { get; set; }
+        public RequestStatus Status { get; set; }
         public string EquipmentModel { get; set; }
         public string ProblemDescription { get; set; }
-        public string Status { get; set; }
         public string ClientFullName { get; set; }
         public string ClientPhone { get; set; }
         public string Engineer { get; set; }
         public string Comments { get; set; }
 
+        public enum RequestStatus
+        {
+            New,           
+            InProgress,    
+            WaitingParts,  
+            Ready,         
+            Completed,    
+            Cancelled      
+        }
+
         public Request() { }
 
         public Request(string number, DateTime date, string equipmentType, string equipmentModel,
-                      string problemDescription, string status, string clientFullName,
+                      string problemDescription, RequestStatus status, string clientFullName,
                       string clientPhone, string engineer, string comments)
         {
             Number = number;

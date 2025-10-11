@@ -16,12 +16,10 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Заголовок -->
             <TextBlock Grid.Row="0" Text="📊 Статистика работы отдела обслуживания" 
                        FontSize="18" FontWeight="Bold" Margin="0,0,0,20"
                        Foreground="#2c3e50" HorizontalAlignment="Center"/>
 
-            <!-- Общая статистика -->
             <GroupBox Grid.Row="1" Header="📈 Общая статистика" Margin="0,0,0,15">
                 <Grid Margin="10">
                     <Grid.ColumnDefinitions>
@@ -65,7 +63,6 @@
                 </Grid>
             </GroupBox>
 
-            <!-- Статистика по типам оборудования -->
             <GroupBox Grid.Row="2" Header="🖥️ Статистика по типам оборудования" Margin="0,0,0,15">
                 <DataGrid Name="dgEquipmentStats" AutoGenerateColumns="False" 
                          IsReadOnly="True" Height="200" Margin="5">
@@ -93,7 +90,6 @@
                 </DataGrid>
             </GroupBox>
 
-            <!-- Статистика по статусам -->
             <GroupBox Grid.Row="3" Header="📋 Статистика по статусам" Margin="0,0,0,15">
                 <DataGrid Name="dgStatusStats" AutoGenerateColumns="False" 
                          IsReadOnly="True" Height="200" Margin="5">
@@ -120,7 +116,6 @@
                 </DataGrid>
             </GroupBox>
 
-            <!-- Статистика по инженерам -->
             <GroupBox Grid.Row="4" Header="👨‍💼 Статистика по инженерам" Margin="0,0,0,15">
                 <DataGrid Name="dgEngineerStats" AutoGenerateColumns="False" 
                          IsReadOnly="True" Height="200" Margin="5">
@@ -147,7 +142,6 @@
                 </DataGrid>
             </GroupBox>
 
-            <!-- Панель управления -->
             <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Content="🔄 Обновить статистику" Width="150" Height="35" Margin="0,0,10,0"
                         Background="#3498db" Foreground="White" FontWeight="SemiBold"

@@ -14,12 +14,10 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Заголовок -->
         <TextBlock Grid.Row="0" Text="📋 Список заявок на обслуживание" 
                    FontSize="18" FontWeight="Bold" Margin="0,0,0,15"
                    Foreground="#2c3e50"/>
 
-        <!-- Панель поиска и фильтров -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
             <TextBlock Text="Поиск:" VerticalAlignment="Center" Margin="0,0,5,0" FontWeight="SemiBold"/>
             <TextBox Name="txtSearch" Width="200" Height="25" Margin="0,0,10,0"
@@ -42,7 +40,6 @@
                     Click="BtnRefresh_Click"/>
         </StackPanel>
 
-        <!-- Панель действий -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,10">
             <Button Content="➕ Новая заявка" Width="120" Height="30" Margin="0,0,10,0"
                     Background="#27ae60" Foreground="White" FontWeight="SemiBold"
@@ -53,12 +50,8 @@
             <Button Content="🗑️ Удалить" Name="btnDelete" Width="100" Height="30" Margin="0,0,10,0"
                     Background="#e74c3c" Foreground="White" FontWeight="SemiBold"
                     Click="BtnDeleteRequest_Click"/>
-            <Button Content="👁️ Просмотр" Name="btnView" Width="100" Height="30" Margin="0,0,10,0"
-                    Background="#9b59b6" Foreground="White" FontWeight="SemiBold"
-                    Click="BtnViewRequest_Click"/>
         </StackPanel>
 
-        <!-- Список заявок -->
         <DataGrid Grid.Row="3" Name="dgRequests" AutoGenerateColumns="False"
                   IsReadOnly="True" SelectionMode="Single"
                   SelectionChanged="DgRequests_SelectionChanged"
@@ -101,7 +94,6 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Статус бар -->
         <StatusBar Grid.Row="4" Background="#34495e">
             <StatusBarItem>
                 <TextBlock Name="txtStatus" Foreground="White" Text="Готово"/>

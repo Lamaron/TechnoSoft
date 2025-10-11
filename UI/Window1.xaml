@@ -29,12 +29,12 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Заголовок -->
+
         <TextBlock Grid.Row="0" Text="Форма заявки на обслуживание" 
                    FontSize="20" FontWeight="Bold" Margin="15,15,15,10"
                    Foreground="#2c3e50" HorizontalAlignment="Center"/>
 
-        <!-- Основная форма -->
+
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="15,0,15,15">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -55,21 +55,18 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Номер заявки -->
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Номер заявки:*" 
                           Margin="0,8" VerticalAlignment="Center" FontWeight="SemiBold"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Name="txtNumber" 
                         Margin="10,8" Height="30"
                         ToolTip="Уникальный номер заявки"/>
 
-                <!-- Дата добавления -->
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Дата добавления:*" 
                           Margin="0,8" VerticalAlignment="Center" FontWeight="SemiBold"/>
                 <DatePicker Grid.Row="1" Grid.Column="1" Name="dpDateAdded" 
                            Margin="10,8" Height="30"
                            SelectedDate="{x:Static sys:DateTime.Now}"/>
 
-                <!-- Тип оборудования -->
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Тип оборудования:*" 
                           Margin="0,8" VerticalAlignment="Center" FontWeight="SemiBold"/>
                 <ComboBox Grid.Row="2" Grid.Column="1" Name="cmbEquipmentType" 
@@ -84,14 +81,13 @@
                     <ComboBoxItem Content="Источник бесперебойного питания"/>
                 </ComboBox>
 
-                <!-- Модель оборудования -->
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Модель оборудования:*" 
                           Margin="0,8" VerticalAlignment="Center" FontWeight="SemiBold"/>
                 <TextBox Grid.Row="3" Grid.Column="1" Name="txtEquipmentModel" 
                         Margin="10,8" Height="30"
                         ToolTip="Например: HP LaserJet Pro M404dn"/>
 
-                <!-- Описание проблемы -->
+
                 <TextBlock Grid.Row="4" Grid.Column="0" Text="Описание проблемы:*" 
                           Margin="0,8" VerticalAlignment="Center" FontWeight="SemiBold"/>
                 <TextBox Grid.Row="4" Grid.Column="1" Name="txtProblemDescription" 
@@ -99,41 +95,31 @@
                         TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
                         ToolTip="Подробно опишите проблему"/>
 
-                <!-- ФИО клиента -->
                 <TextBlock Grid.Row="5" Grid.Column="0" Text="ФИО клиента:*" 
                           Margin="0,8" VerticalAlignment="Center" FontWeight="SemiBold"/>
                 <TextBox Grid.Row="5" Grid.Column="1" Name="txtClientFullName" 
                         Margin="10,8" Height="30"
                         ToolTip="Введите полное имя клиента"/>
 
-                <!-- Номер телефона -->
                 <TextBlock Grid.Row="6" Grid.Column="0" Text="Номер телефона:*" 
                           Margin="0,8" VerticalAlignment="Center" FontWeight="SemiBold"/>
                 <TextBox Grid.Row="6" Grid.Column="1" Name="txtClientPhone" 
                         Margin="10,8" Height="30"
                         ToolTip="Формат: +7 (XXX) XXX-XX-XX"/>
 
-                <!-- Статус заявки -->
                 <TextBlock Grid.Row="7" Grid.Column="0" Text="Статус заявки:*" 
-                          Margin="0,8" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                Margin="0,8" VerticalAlignment="Center" FontWeight="SemiBold"/>
                 <ComboBox Grid.Row="7" Grid.Column="1" Name="cmbStatus" 
-                         Margin="10,8" Height="30">
-                    <ComboBoxItem Content="Новая заявка"/>
-                    <ComboBoxItem Content="В процессе ремонта"/>
-                    <ComboBoxItem Content="Ожидание запчастей"/>
-                    <ComboBoxItem Content="Готово к выдаче"/>
-                    <ComboBoxItem Content="Завершена"/>
-                    <ComboBoxItem Content="Отменена"/>
-                </ComboBox>
+                Margin="10,8" Height="30"
+                DisplayMemberPath="DisplayText"
+                SelectedValuePath="Value"/>
 
-                <!-- Ответственный инженер -->
                 <TextBlock Grid.Row="8" Grid.Column="0" Text="Ответственный инженер:" 
                           Margin="0,8" VerticalAlignment="Center" FontWeight="SemiBold"/>
                 <TextBox Grid.Row="8" Grid.Column="1" Name="txtResponsibleEngineer" 
                         Margin="10,8" Height="30"
                         ToolTip="ФИО инженера, ответственного за заявку"/>
 
-                <!-- Комментарии инженера -->
                 <TextBlock Grid.Row="9" Grid.Column="0" Text="Комментарии инженера:" 
                           Margin="0,8" VerticalAlignment="Center" FontWeight="SemiBold"/>
                 <TextBox Grid.Row="9" Grid.Column="1" Name="txtComments" 
@@ -143,7 +129,7 @@
             </Grid>
         </ScrollViewer>
 
-        <!-- Панель кнопок -->
+
         <Border Grid.Row="2" Background="#f8f9fa" BorderThickness="1,1,0,0" BorderBrush="#dee2e6" Padding="15,10,15,10">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -152,7 +138,6 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Подсказка -->
                 <TextBlock Grid.Column="0" Text="* - обязательные поля" 
                            FontStyle="Italic" Foreground="Gray" VerticalAlignment="Center"/>
 

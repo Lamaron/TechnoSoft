@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using Data.Interfaces;
 using Data.InMemory;
 using Domain;
+using UI.Helpers;
 
 namespace UI
 {
@@ -13,19 +14,28 @@ namespace UI
         private IRequestRepository _repository;
         private Request _selectedRequest;
 
-        // Конструктор БЕЗ параметров (для XAML)
         public RepairRequestListWindow()
         {
             InitializeComponent();
             _repository = new RequestRepository();
+            InitializeStatusFilter();
             Loaded += RepairRequestListWindow_Loaded;
             UpdateActionButtons();
         }
 
-        // Конструктор С параметром (для MainWindow)
+        private void InitializeStatusFilter()
+        {
+            cmbStatusFilter.Items.Add(new ComboBoxItem { Content = "Все статусы", IsSelected = true });
+
+            foreach (var statusItem in StatusHelper.GetStatusItems())
+            {
+                cmbStatusFilter.Items.Add(new ComboBoxItem { Content = statusItem.DisplayText });
+            }
+        }
+
         public RepairRequestListWindow(IRequestRepository repository) : this()
         {
-            _repository = repository; // Используем переданный репозиторий
+            _repository = repository; 
         }
 
         private void RepairRequestListWindow_Loaded(object sender, RoutedEventArgs e)
@@ -37,13 +47,6 @@ namespace UI
         {
             try
             {
-                //if (_repository == null)
-                //{
-                //    MessageBox.Show("Репозиторий не инициализирован", "Ошибка",
-                //                  MessageBoxButton.OK, MessageBoxImage.Error);
-                //    return;
-                //}
-
                 var allRequests = _repository.GetAll();
 
                 if (allRequests == null)
@@ -55,17 +58,13 @@ namespace UI
 
                 var filteredRequests = allRequests;
 
-                // Фильтрация по статусу
-                if (cmbStatusFilter.SelectedItem != null)
+                if (cmbStatusFilter.SelectedItem is ComboBoxItem statusItem &&
+                    statusItem.Content.ToString() != "Все статусы")
                 {
-                    var selectedStatus = (cmbStatusFilter.SelectedItem as ComboBoxItem)?.Content?.ToString();
-                    if (!string.IsNullOrEmpty(selectedStatus) && selectedStatus != "Все статусы")
-                    {
-                        filteredRequests = filteredRequests.Where(r => r.Status == selectedStatus).ToList();
-                    }
+                    var selectedStatus = StatusHelper.GetStatusByDisplayText(statusItem.Content.ToString());
+                    filteredRequests = filteredRequests.Where(r => r.Status == selectedStatus).ToList();
                 }
 
-                // Поиск
                 if (!string.IsNullOrWhiteSpace(txtSearch.Text))
                 {
                     var searchText = txtSearch.Text.ToLower();
@@ -84,8 +83,6 @@ namespace UI
             }
             catch (Exception ex)
             {
-                //MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}", "Ошибка",
-                //              MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -94,7 +91,6 @@ namespace UI
             bool hasSelection = _selectedRequest != null;
             btnEdit.IsEnabled = hasSelection;
             btnDelete.IsEnabled = hasSelection;
-            btnView.IsEnabled = hasSelection;
         }
 
         private void BtnCreateNewRequest_Click(object sender, RoutedEventArgs e)

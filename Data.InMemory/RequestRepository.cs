@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Data.Interfaces;
+using Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Data.Interfaces;
-using Domain;
+using static Domain.Request;
 
 namespace Data.InMemory
 {
@@ -31,7 +32,7 @@ namespace Data.InMemory
                         "Компьютер",
                         "Dell Optiplex",
                         "Не включается",
-                        "Новая заявка",
+                        RequestStatus.New,
                         "Иванов Иван",
                         "+7(999)123-45-67",
                         "Петров А.С.",
@@ -43,7 +44,7 @@ namespace Data.InMemory
                         "Принтер",
                         "HP LaserJet",
                         "Зажевывает бумагу",
-                        "В процессе ремонта",
+                        RequestStatus.InProgress,
                         "Петрова Мария",
                         "+7(999)765-43-21",
                         "Сидоров В.К.",

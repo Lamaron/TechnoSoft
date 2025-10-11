@@ -1,7 +1,9 @@
-﻿using System.Linq;
-using System.Windows;
-using Data.Interfaces;
+﻿using Data.Interfaces;
 using Domain;
+using System.Linq;
+using System.Windows;
+using UI.Helpers;
+using static Domain.Request;
 
 namespace UI
 {
@@ -26,18 +28,17 @@ namespace UI
                 return;
             }
 
-            // Общая статистика
             txtTotalRequests.Text = requests.Count.ToString();
-            txtCompletedRequests.Text = requests.Count(r => r.Status == "Завершена").ToString();
-            txtInProgressRequests.Text = requests.Count(r => r.Status == "В процессе ремонта" || r.Status == "Ожидание запчастей").ToString();
-            txtNewRequests.Text = requests.Count(r => r.Status == "Новая заявка").ToString();
+            txtCompletedRequests.Text = requests.Count(r => r.Status == RequestStatus.Completed).ToString();
+            txtInProgressRequests.Text = requests.Count(r => r.Status == RequestStatus.InProgress ||
+                                                           r.Status == RequestStatus.WaitingParts).ToString();
+            txtNewRequests.Text = requests.Count(r => r.Status == RequestStatus.New).ToString();
 
-            // Статистика по типам оборудования
+
             var equipmentStats = requests
                 .GroupBy(r => r.EquipmentType)
                 .Select(g => new
                 {
-                    Key = string.IsNullOrEmpty(g.Key) ? "Не указан" : g.Key,
                     Value = g.Count(),
                     Percentage = $"{g.Count() * 100.0 / requests.Count:F1}%"
                 })
@@ -45,12 +46,10 @@ namespace UI
                 .ToList();
             dgEquipmentStats.ItemsSource = equipmentStats;
 
-            // Статистика по статусам
             var statusStats = requests
                 .GroupBy(r => r.Status)
                 .Select(g => new
                 {
-                    Key = string.IsNullOrEmpty(g.Key) ? "Не указан" : g.Key,
                     Value = g.Count(),
                     Percentage = $"{g.Count() * 100.0 / requests.Count:F1}%"
                 })
@@ -58,19 +57,18 @@ namespace UI
                 .ToList();
             dgStatusStats.ItemsSource = statusStats;
 
-            // Статистика по инженерам
             var engineerStats = requests
-                .GroupBy(r => string.IsNullOrEmpty(r.Engineer) ? "Не назначен" : r.Engineer)
+                .GroupBy(r => r.Status)
                 .Select(g => new
                 {
-                    Key = g.Key,
-                    Value = g.Count(),
-                    Completed = g.Count(r => r.Status == "Завершена")
+                Key = StatusHelper.GetDisplayText(g.Key),
+                Value = g.Count(),
+                Percentage = $"{g.Count() * 100.0 / requests.Count:F1}%"
                 })
                 .OrderByDescending(x => x.Value)
                 .ToList();
-            dgEngineerStats.ItemsSource = engineerStats;
-        }
+                dgStatusStats.ItemsSource = statusStats;
+                }
 
         private void ClearStatistics()
         {
