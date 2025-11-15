@@ -7,10 +7,10 @@ namespace Data.Interfaces
     {
         int Add(Request request);
         Request GetById(int id);
-        List<Request> GetAll();
+        List<Request> GetAll(RequestFilter filter = null);
         bool Update(Request request);
         bool Delete(int id);
         bool IsNumberExists(string number, int? excludeId = null);
-        string GenerateRequestNumber(); 
+        string GenerateRequestNumber();
     }
 }

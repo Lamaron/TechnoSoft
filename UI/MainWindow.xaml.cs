@@ -1,5 +1,6 @@
-﻿using System.Windows;
-using Data;
+﻿using Data;
+using Services;
+using System.Windows;
 
 namespace UI
 {
@@ -26,7 +27,8 @@ namespace UI
 
         private void BtnStatistics_Click(object sender, RoutedEventArgs e)
         {
-            var statsWindow = new StatisticsWindow(RepositoryContainer.RequestRepository);
+            var statisticsService = new StatisticsService(RepositoryContainer.RequestRepository);
+            var statsWindow = new StatisticsWindow(statisticsService);
             statsWindow.Owner = this;
             statsWindow.ShowDialog();
         }

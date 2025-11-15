@@ -18,42 +18,76 @@ namespace Data.InMemory
             InitializeSampleData();
         }
 
+        public List<Request> GetAll(RequestFilter filter = null)
+        {
+            if (_requests == null) return new List<Request>();
+
+            var result = _requests.AsEnumerable();
+
+            if (filter != null)
+            {
+                if (filter.StartDate.HasValue)
+                    result = result.Where(r => r.Date >= filter.StartDate.Value);
+
+                if (filter.EndDate.HasValue)
+                    result = result.Where(r => r.Date <= filter.EndDate.Value);
+
+                if (filter.Status.HasValue)
+                    result = result.Where(r => r.Status == filter.Status.Value);
+
+                if (!string.IsNullOrEmpty(filter.EquipmentType))
+                    result = result.Where(r => r.EquipmentType == filter.EquipmentType);
+
+                if (!string.IsNullOrEmpty(filter.Engineer))
+                    result = result.Where(r => r.Engineer == filter.Engineer);
+            }
+
+            return result.OrderByDescending(r => r.Date).ToList();
+        }
         private void InitializeSampleData()
         {
             if (_requests.Any()) return;
 
             try
             {
+                var random = new Random();
+                var equipmentTypes = new[] { "Компьютер", "Принтер", "Ноутбук", "Монитор", "Сервер", "МФУ" };
+                var engineers = new[] { "Петров А.С.", "Сидоров В.К.", "Иванова М.П.", "Кузнецов Д.В.", null };
+                var statuses = new[] { RequestStatus.New, RequestStatus.InProgress, RequestStatus.WaitingParts, RequestStatus.Completed, RequestStatus.Cancelled };
+
+                // Существующие примеры
                 var sampleRequests = new[]
                 {
-                    new Request(
-                        "REQ-001",
-                        DateTime.Now.AddDays(-5),
-                        "Компьютер",
-                        "Dell Optiplex",
-                        "Не включается",
-                        RequestStatus.New,
-                        "Иванов Иван",
-                        "+7(999)123-45-67",
-                        "Петров А.С.",
-                        "Требуется диагностика"
-                    ),
-                    new Request(
-                        "REQ-002",
-                        DateTime.Now.AddDays(-3),
-                        "Принтер",
-                        "HP LaserJet",
-                        "Зажевывает бумагу",
-                        RequestStatus.InProgress,
-                        "Петрова Мария",
-                        "+7(999)765-43-21",
-                        "Сидоров В.К.",
-                        "Заказаны ролики подачи"
-                    )
-                };
+            new Request("REQ-001", DateTime.Now.AddDays(-5), "Компьютер", "Dell Optiplex",
+                       "Не включается", RequestStatus.New, "Иванов Иван", "+7(999)123-45-67",
+                       "Петров А.С.", "Требуется диагностика"),
+            new Request("REQ-002", DateTime.Now.AddDays(-3), "Принтер", "HP LaserJet",
+                       "Зажевывает бумагу", RequestStatus.InProgress, "Петрова Мария", "+7(999)765-43-21",
+                       "Сидоров В.К.", "Заказаны ролики подачи")
+        };
 
                 foreach (var request in sampleRequests)
                 {
+                    request.Id = _nextId++;
+                    _requests.Add(request);
+                }
+
+                // Генерация дополнительных тестовых данных
+                for (int i = 0; i < 30; i++)
+                {
+                    var request = new Request(
+                        $"REQ-{_nextId:000}",
+                        DateTime.Now.AddDays(-random.Next(0, 180)),
+                        equipmentTypes[random.Next(equipmentTypes.Length)],
+                        $"Модель {random.Next(1000, 9999)}",
+                        $"Описание проблемы {i + 1}",
+                        statuses[random.Next(statuses.Length)],
+                        $"Клиент {i + 1}",
+                        $"+7(999){random.Next(1000000, 9999999)}",
+                        engineers[random.Next(engineers.Length)],
+                        $"Комментарий {i + 1}"
+                    );
+
                     request.Id = _nextId++;
                     _requests.Add(request);
                 }

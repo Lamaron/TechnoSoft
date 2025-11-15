@@ -13,6 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.InMemory", "Data.InMem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{629B2A3C-D0BB-4245-B25A-17566B11E22E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{754FC069-D67B-A9D7-50A1-8D1CA196D8F1}"
+	ProjectSection(SolutionItems) = preProject
+		StatisticsService.cs = StatisticsService.cs
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{E56EF77E-B6FE-4514-9F14-C09836F7ACCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +46,10 @@ Global
 		{629B2A3C-D0BB-4245-B25A-17566B11E22E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{629B2A3C-D0BB-4245-B25A-17566B11E22E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{629B2A3C-D0BB-4245-B25A-17566B11E22E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E56EF77E-B6FE-4514-9F14-C09836F7ACCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E56EF77E-B6FE-4514-9F14-C09836F7ACCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E56EF77E-B6FE-4514-9F14-C09836F7ACCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E56EF77E-B6FE-4514-9F14-C09836F7ACCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
