@@ -43,5 +43,19 @@ namespace Domain
             Engineer = engineer;
             Comments = comments;
         }
+
+        public void CopyFrom(Request other)
+        {
+            Number = other.Number;
+            Date = other.Date;
+            EquipmentType = other.EquipmentType;
+            EquipmentModel = other.EquipmentModel;
+            ProblemDescription = other.ProblemDescription;
+            ClientFullName = other.ClientFullName;
+            ClientPhone = other.ClientPhone;
+            Status = other.Status;
+            Engineer = other.Engineer;
+            Comments = other.Comments;
+        }
     }
 }
