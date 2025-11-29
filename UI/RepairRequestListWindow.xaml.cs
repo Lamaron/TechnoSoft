@@ -3,7 +3,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Data.Interfaces;
-using Data.InMemory;
 using Domain;
 using UI.Helpers;
 
@@ -13,15 +12,6 @@ namespace UI
     {
         private IRequestRepository _repository;
         private Request _selectedRequest;
-
-        public RepairRequestListWindow()
-        {
-            InitializeComponent();
-            _repository = new RequestRepository();
-            InitializeStatusFilter();
-            Loaded += RepairRequestListWindow_Loaded;
-            UpdateActionButtons();
-        }
 
         private void InitializeStatusFilter()
         {
@@ -33,9 +23,13 @@ namespace UI
             }
         }
 
-        public RepairRequestListWindow(IRequestRepository repository) : this()
+        public RepairRequestListWindow(IRequestRepository repository)
         {
-            _repository = repository; 
+            InitializeComponent();
+            _repository = repository;
+            InitializeStatusFilter();
+            Loaded += RepairRequestListWindow_Loaded;
+            UpdateActionButtons();
         }
 
         private void RepairRequestListWindow_Loaded(object sender, RoutedEventArgs e)

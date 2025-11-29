@@ -37,19 +37,18 @@ namespace UI
             _requestRepository = new RequestRepository(_dbContext);
 
             SeedInitData();
-            var mainWindow = new MainWindow();
+
+            var mainWindow = new MainWindow(_requestRepository);
             mainWindow.Show();
+
         }
 
         private void SeedInitData()
         {
-
             if (_requestRepository.GetAll().Any())
             {
-
                 return;
             }
-
 
             var requests = new[]
             {
@@ -128,7 +127,6 @@ namespace UI
 
         protected override void OnExit(ExitEventArgs e)
         {
-
             _dbContext?.Dispose();
             base.OnExit(e);
         }

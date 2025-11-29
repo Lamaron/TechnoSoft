@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36408.4
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11217.181 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{AFC0BFE9-FEFF-48EB-9FB5-A986EDFD1D1E}"
 EndProject
@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Interfaces", "Data.Int
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.InMemory", "Data.InMemory\Data.InMemory.csproj", "{233C3EC5-6006-4A8A-B745-03D285BE3755}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{629B2A3C-D0BB-4245-B25A-17566B11E22E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{754FC069-D67B-A9D7-50A1-8D1CA196D8F1}"
 	ProjectSection(SolutionItems) = preProject
 		StatisticsService.cs = StatisticsService.cs
@@ -21,6 +19,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{E56EF77E-B6FE-4514-9F14-C09836F7ACCC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.SqlServer", "Data.SqlServer\Data.SqlServer.csproj", "{7B38D6BA-ABB2-4DD2-80F4-097448BA9FFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_Data", "_Data\_Data.csproj", "{0E04D0B4-1A2E-41D2-942D-E66CA2E6A2C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,10 +44,6 @@ Global
 		{233C3EC5-6006-4A8A-B745-03D285BE3755}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{233C3EC5-6006-4A8A-B745-03D285BE3755}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{233C3EC5-6006-4A8A-B745-03D285BE3755}.Release|Any CPU.Build.0 = Release|Any CPU
-		{629B2A3C-D0BB-4245-B25A-17566B11E22E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{629B2A3C-D0BB-4245-B25A-17566B11E22E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{629B2A3C-D0BB-4245-B25A-17566B11E22E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{629B2A3C-D0BB-4245-B25A-17566B11E22E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E56EF77E-B6FE-4514-9F14-C09836F7ACCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E56EF77E-B6FE-4514-9F14-C09836F7ACCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E56EF77E-B6FE-4514-9F14-C09836F7ACCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -56,6 +52,10 @@ Global
 		{7B38D6BA-ABB2-4DD2-80F4-097448BA9FFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B38D6BA-ABB2-4DD2-80F4-097448BA9FFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B38D6BA-ABB2-4DD2-80F4-097448BA9FFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E04D0B4-1A2E-41D2-942D-E66CA2E6A2C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E04D0B4-1A2E-41D2-942D-E66CA2E6A2C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E04D0B4-1A2E-41D2-942D-E66CA2E6A2C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E04D0B4-1A2E-41D2-942D-E66CA2E6A2C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

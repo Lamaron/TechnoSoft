@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Data.Interfaces;
 using Domain;
-using Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Data.SqlServer
 {

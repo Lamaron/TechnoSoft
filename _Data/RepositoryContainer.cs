@@ -1,6 +1,5 @@
 ﻿using Data.InMemory;
-
-namespace Data
+namespace _Data
 {
     public static class RepositoryContainer
     {

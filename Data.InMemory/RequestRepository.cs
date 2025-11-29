@@ -55,7 +55,6 @@ namespace Data.InMemory
                 var engineers = new[] { "Петров А.С.", "Сидоров В.К.", "Иванова М.П.", "Кузнецов Д.В.", null };
                 var statuses = new[] { RequestStatus.New, RequestStatus.InProgress, RequestStatus.WaitingParts, RequestStatus.Completed, RequestStatus.Cancelled };
 
-                // Существующие примеры
                 var sampleRequests = new[]
                 {
             new Request("REQ-001", DateTime.Now.AddDays(-5), "Компьютер", "Dell Optiplex",
@@ -72,7 +71,6 @@ namespace Data.InMemory
                     _requests.Add(request);
                 }
 
-                // Генерация дополнительных тестовых данных
                 for (int i = 0; i < 30; i++)
                 {
                     var request = new Request(

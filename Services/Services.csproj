@@ -7,7 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Data\Data.csproj" />
+    <ProjectReference Include="..\Data.InMemory\Data.InMemory.csproj" />
+    <ProjectReference Include="..\Data.Interfaces\Data.Interfaces.csproj" />
+    <ProjectReference Include="..\Data.SqlServer\Data.SqlServer.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\_Data\_Data.csproj" />
   </ItemGroup>
 
 </Project>
